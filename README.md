@@ -1,5 +1,5 @@
 # graph
-> A graph [component](https://marcodpt.github.io/component/) based on
+> A graph [component](https://github.com/marcodpt/component/) based on
 [cytoscape.js](https://cytoscape.org/)
 
 [Live demo](https://marcodpt.github.io/component/#https://cdn.jsdelivr.net/gh/marcodpt/graph/sample.js)
