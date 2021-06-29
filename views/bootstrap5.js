@@ -2,11 +2,8 @@ import {
   fas,
   spinner
 } from 'https://cdn.jsdelivr.net/gh/marcodpt/views/index.js'
-import {
-  h, text
-} from 'https://cdn.jsdelivr.net/npm/hyperapp@2.0.18/index.min.js'
 
-const main = () =>
+const main = (h, text) => () =>
   h('div', {
     class: 'w-100 position-absolute start-0 top-0 bottom-0 mt-5'
   }, [
@@ -39,7 +36,7 @@ const main = () =>
     ])
   ])
 
-const info = ({label, info, pending}) =>
+const info = (h, text) => ({label, info, pending}) =>
   h('div', {
     class: [
       'card-body h-100 overflow-auto',

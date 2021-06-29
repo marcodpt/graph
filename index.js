@@ -1,26 +1,25 @@
-import {app} from 'https://cdn.jsdelivr.net/npm/hyperapp@2.0.18/index.min.js'
 import {main, info} from './views/bootstrap5.js'
+import {
+  component
+} from 'https://cdn.jsdelivr.net/gh/marcodpt/component/index.js'
 import cytoscape from
   'https://cdn.jsdelivr.net/npm/cytoscape@3.19.0/dist/cytoscape.esm.min.js'
 
 export default (e, params) => {
-  app({
-    view: main,
-    node: e
-  })
+  component(e, main)
 
   const V = params.data.filter(X => X.source == null || X.target == null)
   const E = params.data.filter(X =>
     X.source != null &&
     X.target != null &&
-    V.indexOf(X.source) != -1 &&
-    V.indexOf(X.target) != -1
+    V.map(v => v.id).indexOf(X.source) != -1 &&
+    V.map(v => v.id).indexOf(X.target) != -1
   )
 
   setTimeout(() => {
     var g = cytoscape({
       container: e.querySelector('[data-ctx=graph]'),
-      elements: V.concat(E),
+      elements: V.concat(E).map(X => ({data: X})),
       style: [
         {
           selector: 'node',
@@ -51,45 +50,33 @@ export default (e, params) => {
       }
     })
 
-    app({
-      init: {
-        label: '',
-        info: '',
-        pending: false
-      },
-      view: info,
-      subscriptions: () => [[dispatch => {
-        const listener = ev => {
-          var D = ev.target.data()
-          var stop = false
-          requestAnimationFrame(() => dispatch(state => {
-            if (state.pending) {
-              stop = true
-              return state
-            } else {
-              return {
-                pending: true,
-                label: D.label,
-                info: ''
-              }
-            }
-          }))
-          if (!stop) {
-            Promise.resolve().then(() => D.info).then(info => {
-              dispatch(state => {
+    g.on('tap', component(e.querySelector('[data-ctx=app]'), info, {
+      label: '',
+      info: '',
+      pending: false
+    }, (state, ev) => {
+      var D = ev.target.data()
+      if (state.pending) {
+        return state
+      } else {
+        return [
+          {
+            pending: true,
+            label: D.label,
+            info: ''
+          }, [
+            dispatch => {
+              Promise.resolve().then(() => D.info).then(info => {
                 requestAnimationFrame(() => dispatch(state => ({
                   pending: false,
                   label: D.label,
                   info: info
                 })))
               })
-            })
-          }
-        }
-        g.on('tap', listener)
-        return () => g.off('tap', listener)
-      }]],
-      node: e.querySelector('[data-ctx=app]')
-    })
+            }
+          ]
+        ]
+      }
+    }))
   }, 50)
 }
