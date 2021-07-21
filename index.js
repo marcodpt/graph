@@ -1,7 +1,6 @@
 import {main, info} from './views/bootstrap5.js'
-import {
-  component
-} from 'https://cdn.jsdelivr.net/gh/marcodpt/component/index.js'
+import component from 
+  'https://cdn.jsdelivr.net/gh/marcodpt/component@0.0.1/index.js'
 import cytoscape from
   'https://cdn.jsdelivr.net/npm/cytoscape@3.19.0/dist/cytoscape.esm.min.js'
 
@@ -17,6 +16,11 @@ export default (e, params) => {
   )
 
   setTimeout(() => {
+    const height = Math.max(
+      document.documentElement.clientHeight || 0,
+      window.innerHeight || 0
+    ) - e.offsetTop
+    e.firstChild.style.height = height+'px'
     var g = cytoscape({
       container: e.querySelector('[data-ctx=graph]'),
       elements: V.concat(E).map(X => ({data: X})),

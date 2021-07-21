@@ -1,11 +1,11 @@
 import {
   fas,
   spinner
-} from 'https://cdn.jsdelivr.net/gh/marcodpt/views/index.js'
+} from 'https://cdn.jsdelivr.net/gh/marcodpt/views@0.0.1/index.js'
 
 const main = (h, text) => () =>
   h('div', {
-    class: 'w-100 position-absolute start-0 top-0 bottom-0 mt-5'
+    class: 'w-100'
   }, [
     h('div', {
       class: 'p-5 h-100'
