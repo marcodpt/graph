@@ -1,8 +1,7 @@
 # graph
-> A graph [element](https://github.com/marcodpt/element/) based on
-[cytoscape.js](https://cytoscape.org/)
+> A graph element based on [cytoscape.js](https://cytoscape.org/)
 
-[Live demo](https://marcodpt.github.io/element/?url=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fmarcodpt%2Fgraph%2Fsamples.js)
+[Live demo](https://marcodpt.github.io/h/?url=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fmarcodpt%2Fgraph%2Fsamples.js)
 
 ## Usage
 ```js
